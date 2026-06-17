@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -37,6 +38,11 @@ class User extends Authenticatable implements FilamentUser
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class, 'agent_id');
+    }
+
+    public function tasks(): HasManyThrough
+    {
+        return $this->hasManyThrough(Task::class, Contact::class, 'agent_id', 'contact_id');
     }
 
     /**

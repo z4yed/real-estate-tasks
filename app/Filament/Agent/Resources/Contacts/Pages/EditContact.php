@@ -11,6 +11,11 @@ class EditContact extends EditRecord
 {
     protected static string $resource = ContactResource::class;
 
+    public function getTitle(): string
+    {
+        return "Edit Contact: {$this->getRecord()->name}";
+    }
+
     protected function getHeaderActions(): array
     {
         return [

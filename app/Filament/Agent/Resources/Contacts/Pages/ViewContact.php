@@ -10,6 +10,11 @@ class ViewContact extends ViewRecord
 {
     protected static string $resource = ContactResource::class;
 
+    public function getTitle(): string
+    {
+        return "Contact Profile: {$this->getRecord()->name}";
+    }
+
     protected function getHeaderActions(): array
     {
         return [
