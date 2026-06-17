@@ -39,7 +39,6 @@ return [
             ['label' => 'Admin', 'email' => 'admin@example.com', 'panel' => 'admin'],
             ['label' => 'Alice (Agent)', 'email' => 'agent1@example.com', 'panel' => 'agent'],
             ['label' => 'Bob (Agent)', 'email' => 'agent2@example.com', 'panel' => 'agent'],
-            ['label' => 'Carol (Agent)', 'email' => 'agent3@example.com', 'panel' => 'agent'],
         ],
     ],
 

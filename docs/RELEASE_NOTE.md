@@ -70,6 +70,8 @@ Pull request  ->  Merge to main  ->  Build image  ->  Deploy to server  ->  Live
 
 The result: once a change is approved, it's live on [real-estate-tasks.zayed-hassan.com](https://real-estate-tasks.zayed-hassan.com) within minutes, with no manual steps and no downtime surprises.
 
+You can follow each build and deployment in the pipeline history here: [github.com/z4yed/real-estate-tasks/actions](https://github.com/z4yed/real-estate-tasks/actions).
+
 ---
 
-_Have feedback or questions? Just reply and we'll be happy to help._
+Developed by [Zayed Hassan](https://zayed-hassan.com).
