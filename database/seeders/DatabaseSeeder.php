@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
                 'phone' => '+1 (555) 100-2000',
                 'tasks' => [
                     ['Call to confirm viewing time', -3, TaskStatus::Pending],
-                    ['Send updated listing brochure', 0, TaskStatus::InProgress],
+                    ['Send updated listing brochure', 0, TaskStatus::Pending],
                 ],
             ],
             [
