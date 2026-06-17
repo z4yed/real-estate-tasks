@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Filament\Actions\Action;
+use Filament\Support\Facades\FilamentView;
 use Filament\Support\Icons\Heroicon;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +24,19 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaultActionIcons();
+        $this->configureDemoLoginButtons();
+    }
+
+    private function configureDemoLoginButtons(): void
+    {
+        if (! config('settings.demo.enabled')) {
+            return;
+        }
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+            fn (): string => view('filament.demo-login-buttons')->render(),
+        );
     }
 
     private function configureDefaultActionIcons(): void
