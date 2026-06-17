@@ -61,6 +61,26 @@ class Task extends Model
         return $query->where('status', '!=', TaskStatus::Completed->value);
     }
 
+    public function scopeCompleted(Builder $query): Builder
+    {
+        return $query->where('status', TaskStatus::Completed->value);
+    }
+
+    public function scopeCompletedToday(Builder $query): Builder
+    {
+        return $query->completed()->whereDate('completed_at', today());
+    }
+
+    public function scopeCompletedThisWeek(Builder $query): Builder
+    {
+        return $query->completed()->whereBetween('completed_at', [now()->startOfWeek(), now()->endOfWeek()]);
+    }
+
+    public function scopeCompletedThisMonth(Builder $query): Builder
+    {
+        return $query->completed()->whereBetween('completed_at', [now()->startOfMonth(), now()->endOfMonth()]);
+    }
+
     public function scopeOverdue(Builder $query): Builder
     {
         return $query->notCompleted()->whereDate('due_date', '<', today());

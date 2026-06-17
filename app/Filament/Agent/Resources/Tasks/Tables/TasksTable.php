@@ -3,6 +3,7 @@
 namespace App\Filament\Agent\Resources\Tasks\Tables;
 
 use App\Enums\TaskStatus;
+use App\Filament\Agent\Resources\Contacts\ContactResource;
 use App\Models\Task;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -18,6 +19,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
+use Livewire\Component;
 
 class TasksTable
 {
@@ -25,8 +27,9 @@ class TasksTable
     {
         return $table
             ->columns(self::columns())
-            ->defaultSort('due_date', 'asc')
+            ->defaultSort('id', 'desc')
             ->filters(self::filters())
+            ->recordUrl(fn (Task $record): string => ContactResource::getUrl('view', ['record' => $record->contact_id]))
             ->recordActions([
                 self::startAction(),
                 self::markCompleteAction(),
@@ -92,13 +95,15 @@ class TasksTable
             ->icon(Heroicon::OutlinedArrowPath)
             ->color('warning')
             ->visible(fn (Task $record): bool => $record->status === TaskStatus::Pending)
-            ->action(function (Task $record): void {
+            ->action(function (Task $record, Component $livewire): void {
                 $record->update(['status' => TaskStatus::InProgress]);
 
                 Notification::make()
                     ->title('Task marked in progress')
                     ->success()
                     ->send();
+
+                $livewire->dispatch('tasks-updated');
             });
     }
 
@@ -109,13 +114,15 @@ class TasksTable
             ->icon(Heroicon::OutlinedCheckCircle)
             ->color('success')
             ->visible(fn (Task $record): bool => $record->status === TaskStatus::InProgress)
-            ->action(function (Task $record): void {
+            ->action(function (Task $record, Component $livewire): void {
                 $record->update(['status' => TaskStatus::Completed]);
 
                 Notification::make()
                     ->title('Task completed')
                     ->success()
                     ->send();
+
+                $livewire->dispatch('tasks-updated');
             });
     }
 }
