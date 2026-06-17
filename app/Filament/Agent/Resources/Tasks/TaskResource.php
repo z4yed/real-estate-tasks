@@ -28,6 +28,21 @@ class TaskResource extends Resource
         return parent::getEloquentQuery()->forAgent(auth()->id());
     }
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getEloquentQuery()->notCompleted()->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return static::getEloquentQuery()->overdue()->exists() ? 'danger' : 'warning';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Incomplete tasks';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return TaskForm::configure($schema);

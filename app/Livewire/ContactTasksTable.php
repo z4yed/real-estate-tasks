@@ -42,7 +42,7 @@ class ContactTasksTable extends Component implements HasActions, HasSchemas, Has
         return $table
             ->query(fn (): Builder => Task::query()->where('contact_id', $this->contact->getKey()))
             ->columns(TasksTable::columns(showContact: false))
-            ->defaultSort('due_date', 'asc')
+            ->defaultSort('id', 'desc')
             ->filters(TasksTable::filters())
             ->headerActions([
                 CreateAction::make()

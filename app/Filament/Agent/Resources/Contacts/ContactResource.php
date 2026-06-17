@@ -30,6 +30,11 @@ class ContactResource extends Resource
         return parent::getEloquentQuery()->whereBelongsTo(auth()->user(), 'agent');
     }
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getEloquentQuery()->count();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return ContactForm::configure($schema);
