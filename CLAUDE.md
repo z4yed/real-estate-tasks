@@ -386,4 +386,6 @@ livewire(ListUsers::class)
 - Do not use DB-level enum columns. Keep the column as a `string` and apply the PHP backed enum as a model cast.
 - App configuration (panel paths, etc.) lives in `config/settings.php`. Role names live in the `App\Enums\UserRole` enum.
 - Seeders must run in production (no Faker/dev dependencies) and be idempotent.
+- Do not create model factories. The Docker image is built with `composer install --no-dev`, so Faker is unavailable. Generate models with `--no-interaction` and without factories; seed demo data deterministically in `DatabaseSeeder`.
+- Name foreign keys by their domain role rather than the table, e.g. `contacts.agent_id` referencing `users` via `->constrained('users')`.
 - Automated tests are out of scope for the current assignment unless explicitly requested.
