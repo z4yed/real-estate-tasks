@@ -22,4 +22,25 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Demo Mode
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, the welcome page and panel login screens expose one-click
+    | login buttons for the seeded demo accounts. Disable in real production
+    | environments by setting DEMO_MODE=false.
+    |
+    */
+
+    'demo' => [
+        'enabled' => env('DEMO_MODE', true),
+        'accounts' => [
+            ['label' => 'Admin', 'email' => 'admin@example.com', 'panel' => 'admin'],
+            ['label' => 'Alice (Agent)', 'email' => 'agent1@example.com', 'panel' => 'agent'],
+            ['label' => 'Bob (Agent)', 'email' => 'agent2@example.com', 'panel' => 'agent'],
+            ['label' => 'Carol (Agent)', 'email' => 'agent3@example.com', 'panel' => 'agent'],
+        ],
+    ],
+
 ];

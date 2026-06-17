@@ -35,6 +35,16 @@ class User extends Authenticatable implements FilamentUser
         };
     }
 
+    public function canImpersonate(): bool
+    {
+        return $this->hasRole(UserRole::Admin->value);
+    }
+
+    public function canBeImpersonated(): bool
+    {
+        return $this->hasRole(UserRole::Agent->value);
+    }
+
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class, 'agent_id');
