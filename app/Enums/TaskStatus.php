@@ -10,14 +10,12 @@ use Filament\Support\Icons\Heroicon;
 enum TaskStatus: string implements HasColor, HasIcon, HasLabel
 {
     case Pending = 'pending';
-    case InProgress = 'in_progress';
     case Completed = 'completed';
 
     public function getLabel(): string
     {
         return match ($this) {
             self::Pending => 'Pending',
-            self::InProgress => 'In Progress',
             self::Completed => 'Completed',
         };
     }
@@ -26,7 +24,6 @@ enum TaskStatus: string implements HasColor, HasIcon, HasLabel
     {
         return match ($this) {
             self::Pending => 'gray',
-            self::InProgress => 'warning',
             self::Completed => 'success',
         };
     }
@@ -35,7 +32,6 @@ enum TaskStatus: string implements HasColor, HasIcon, HasLabel
     {
         return match ($this) {
             self::Pending => Heroicon::OutlinedClock,
-            self::InProgress => Heroicon::OutlinedArrowPath,
             self::Completed => Heroicon::OutlinedCheckCircle,
         };
     }

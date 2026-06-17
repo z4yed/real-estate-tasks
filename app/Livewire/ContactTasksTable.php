@@ -54,14 +54,16 @@ class ContactTasksTable extends Component implements HasActions, HasSchemas, Has
                         $data['contact_id'] = $this->contact->getKey();
 
                         return $data;
-                    }),
+                    })
+                    ->after(fn () => $this->dispatch('tasks-updated')),
             ])
             ->recordActions([
-                TasksTable::startAction(),
                 TasksTable::markCompleteAction(),
                 EditAction::make()
-                    ->schema(fn (Schema $schema): Schema => TaskForm::configure($schema, showContact: false)),
-                DeleteAction::make(),
+                    ->schema(fn (Schema $schema): Schema => TaskForm::configure($schema, showContact: false))
+                    ->after(fn () => $this->dispatch('tasks-updated')),
+                DeleteAction::make()
+                    ->after(fn () => $this->dispatch('tasks-updated')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

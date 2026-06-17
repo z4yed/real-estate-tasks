@@ -55,7 +55,7 @@ class ContactInfolist
                             ]),
                         Tab::make('Tasks')
                             ->icon(Heroicon::OutlinedClipboardDocumentList)
-                            ->badge(fn ($record): int => $record->tasks()->count())
+                            ->badge(fn ($record): int => $record->tasks()->notCompleted()->count())
                             ->schema([
                                 Livewire::make(ContactTasksTable::class)
                                     ->columnSpanFull(),

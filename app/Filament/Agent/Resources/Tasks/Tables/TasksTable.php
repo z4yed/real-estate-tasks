@@ -31,7 +31,6 @@ class TasksTable
             ->filters(self::filters())
             ->recordUrl(fn (Task $record): string => ContactResource::getUrl('view', ['record' => $record->contact_id]))
             ->recordActions([
-                self::startAction(),
                 self::markCompleteAction(),
                 EditAction::make(),
             ])
@@ -88,32 +87,13 @@ class TasksTable
         ];
     }
 
-    public static function startAction(): Action
-    {
-        return Action::make('start')
-            ->label('Mark in progress')
-            ->icon(Heroicon::OutlinedArrowPath)
-            ->color('warning')
-            ->visible(fn (Task $record): bool => $record->status === TaskStatus::Pending)
-            ->action(function (Task $record, Component $livewire): void {
-                $record->update(['status' => TaskStatus::InProgress]);
-
-                Notification::make()
-                    ->title('Task marked in progress')
-                    ->success()
-                    ->send();
-
-                $livewire->dispatch('tasks-updated');
-            });
-    }
-
     public static function markCompleteAction(): Action
     {
         return Action::make('complete')
             ->label('Mark complete')
             ->icon(Heroicon::OutlinedCheckCircle)
             ->color('success')
-            ->visible(fn (Task $record): bool => $record->status === TaskStatus::InProgress)
+            ->visible(fn (Task $record): bool => $record->status === TaskStatus::Pending)
             ->action(function (Task $record, Component $livewire): void {
                 $record->update(['status' => TaskStatus::Completed]);
 

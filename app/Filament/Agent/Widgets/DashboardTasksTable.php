@@ -23,18 +23,17 @@ class DashboardTasksTable extends TableWidget
     {
         return $table
             ->heading('Open Tasks')
-            ->description('Your latest pending and in-progress tasks.')
+            ->description('Your latest pending tasks.')
             ->query(fn (): Builder => Task::query()->forAgent(auth()->id())->notCompleted())
             ->defaultSort('id', 'desc')
             ->columns(TasksTable::columns(showContact: true))
             ->filters(TasksTable::filters())
             ->recordUrl(fn (Task $record): string => ContactResource::getUrl('view', ['record' => $record->contact_id]))
             ->recordActions([
-                TasksTable::startAction(),
                 TasksTable::markCompleteAction(),
             ])
             ->paginated([5, 10, 25])
             ->emptyStateHeading('Nothing open')
-            ->emptyStateDescription('You have no pending or in-progress tasks.');
+            ->emptyStateDescription('You have no pending tasks.');
     }
 }
