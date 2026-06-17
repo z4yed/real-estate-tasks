@@ -58,7 +58,7 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 RUN apk add --no-cache git curl zip unzip bash supervisor \
     && mkdir -p /etc/supervisor/conf.d \
     && install-php-extensions \
-        pdo_mysql mbstring exif pcntl bcmath gd zip intl opcache redis imagick
+        pdo_mysql mbstring exif pcntl bcmath gd zip intl opcache redis
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 

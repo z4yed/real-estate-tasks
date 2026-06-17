@@ -379,3 +379,11 @@ livewire(ListUsers::class)
   - `$view`: `protected string` (not `protected static string`) on `Page` and `Widget` classes
 
 </laravel-boost-guidelines>
+
+# Project Conventions
+
+- Keep comments minimal. Avoid verbose, explanatory, or rationale-heavy comments that read as AI-generated. Let the code speak for itself; only annotate genuinely non-obvious logic.
+- Do not use DB-level enum columns. Keep the column as a `string` and apply the PHP backed enum as a model cast.
+- App configuration (panel paths, etc.) lives in `config/settings.php`. Role names live in the `App\Enums\UserRole` enum.
+- Seeders must run in production (no Faker/dev dependencies) and be idempotent.
+- Automated tests are out of scope for the current assignment unless explicitly requested.

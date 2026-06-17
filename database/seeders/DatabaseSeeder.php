@@ -6,36 +6,33 @@ use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         foreach (UserRole::cases() as $role) {
             Role::findOrCreate($role->value);
         }
 
-        User::factory()
-            ->create([
-                'name' => 'Admin',
-                'email' => 'admin@example.com',
-            ])
-            ->assignRole(UserRole::Admin->value);
+        $this->createUser('Admin', 'admin@example.com', UserRole::Admin);
 
-        collect(['Alice Agent', 'Bob Agent', 'Carol Agent'])
-            ->each(function (string $name, int $index): void {
-                User::factory()
-                    ->create([
-                        'name' => $name,
-                        'email' => 'agent'.($index + 1).'@example.com',
-                    ])
-                    ->assignRole(UserRole::Agent->value);
-            });
+        foreach (['Alice Agent', 'Bob Agent', 'Carol Agent'] as $index => $name) {
+            $this->createUser($name, 'agent'.($index + 1).'@example.com', UserRole::Agent);
+        }
+    }
+
+    private function createUser(string $name, string $email, UserRole $role): void
+    {
+        $user = User::updateOrCreate(
+            ['email' => $email],
+            ['name' => $name, 'password' => Hash::make('password')],
+        );
+
+        $user->syncRoles($role->value);
     }
 }
